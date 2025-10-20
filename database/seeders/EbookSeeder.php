@@ -27,25 +27,21 @@ class EbookSeeder extends Seeder
         // generate data ebook
         $ebookData = [
             [
-                'title' => 'The Laravel Co-pilot Guide',
-                'author' => 'Senior Engineer',
-                'description' => 'Panduan lengkap menjadi Senior Software Engineer Laravel.',
-                'price' => 49.99,
-                // PATH PENTING: Ganti dengan nama file PDF dummy Anda
+                'title' => 'Soal Assessment Siswa Kelas X.pdf',
+                'author' => 'admin',
+                'description' => 'lorem',
                 'filepath' => 'pdf1.pdf',
             ],
             [
-                'title' => 'Deep Dive into Tailwind CSS',
-                'author' => 'Tailwind Expert',
-                'description' => 'Mempelajari Utility-First CSS secara mendalam.',
-                'price' => 29.50,
+                'title' => 'Soal Assessment Siswa Kelas XI.pdf',
+                'author' => 'admin',
+                'description' => 'lorem',
                 'filepath' => 'pdf2.pdf',
             ],
             [
-                'title' => 'Secure PDF Viewer with JS',
-                'author' => 'Security Consultant',
-                'description' => 'Teknik memblokir download dan copy pada konten web.',
-                'price' => 99.00,
+                'title' => 'Soal Assessment Siswa Kelas XII.pdf',
+                'author' => 'admin',
+                'description' => 'lorem',
                 'filepath' => 'pdf3.pdf',
             ]
         ];
