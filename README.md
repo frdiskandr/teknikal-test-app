@@ -10,13 +10,13 @@ This is a Laravel project.
 *   Composer
 *   Node.js
 *   NPM
-*   A database (e.g., MySQL, PostgreSQL)
+*   A database sqlite
 
 ### Installation
 
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/your-username/teknikal-test-app.git
+    git clone https://github.com/frdiskandr/teknikal-test-app.git
     ```
 2.  Navigate to the project directory:
     ```bash
