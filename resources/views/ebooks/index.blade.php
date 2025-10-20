@@ -44,6 +44,9 @@
                         </table>
                     </div>
                 </div>
+                <a href="{{ route('ebooks.create') }}" class="bg-indigo-600 flex text-center flex-col hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-150">
+                            + Tambah Ebook Baru
+                </a>
             </div>
         </div>
     </div>

@@ -14,6 +14,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Rute utama dashboard Ebook (READ: index)
     Route::get('/ebooks', [EbookController::class, 'index'])->name('ebooks.index');
 
+    // Rute untuk membuat Ebook baru (Formulir)
+    Route::get('/ebooks/create', [EbookController::class, 'create'])->name('ebooks.create');
+
+    // Rute untuk menyimpan Ebook baru (POST)
+    Route::post('/ebooks', [EbookController::class, 'store'])->name('ebooks.store');
+
     // Rute untuk melihat detail Ebook (viewer) (READ: show)
     Route::get('/ebooks/{ebook}', [EbookController::class, 'show'])->name('ebooks.show');
 

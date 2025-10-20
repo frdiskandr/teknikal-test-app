@@ -15,31 +15,34 @@ class EbookSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::firstOrCreate([
-            "email" => "admin@gmail.com",
-        ],
-        [
-            'name' => 'admin',
-            'password' => Hash::make('admin123'),
-            'remember_token' => Str::random(10)
-        ]);
+        $user = User::firstOrCreate(
+            [
+                "email" => "admin@gmail.com",
+            ],
+            [
+                'name' => 'admin',
+                'password' => Hash::make('admin123'),
+                'remember_token' => Str::random(10)
+            ]
+        );
 
         // generate data ebook
         $ebookData = [
             [
-                'title' => 'Soal Assessment Siswa Kelas X.pdf',
+                'title' => 'Soal Assessment Siswa Kelas X',
                 'author' => 'admin',
                 'description' => 'lorem',
+
                 'filepath' => 'pdf1.pdf',
             ],
             [
-                'title' => 'Soal Assessment Siswa Kelas XI.pdf',
+                'title' => 'Soal Assessment Siswa Kelas XI',
                 'author' => 'admin',
                 'description' => 'lorem',
                 'filepath' => 'pdf2.pdf',
             ],
             [
-                'title' => 'Soal Assessment Siswa Kelas XII.pdf',
+                'title' => 'Soal Assessment Siswa Kelas XII',
                 'author' => 'admin',
                 'description' => 'lorem',
                 'filepath' => 'pdf3.pdf',

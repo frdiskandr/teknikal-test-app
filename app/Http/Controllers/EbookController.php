@@ -22,18 +22,17 @@ class EbookController extends Controller
         // Mengirim data Ebook ke view viewer
         return view('ebooks.viewer', [
             'ebook' => $ebook,
-            // URL yang aman untuk streaming PDF (route ebooks.stream akan dibuat di Lngkh B2)
             'pdfUrl' => route('ebooks.stream', $ebook),
         ]);
     }
 
     public function stream(Ebook $ebook): StreamedResponse
     {
-        // Mendefinisikan lokasi file PDF di storage (Misalnya: storage/app/ebooks/nama_file.pdf)
+
         $path = 'ebooks/' . $ebook->filepath;
 
         if (!Storage::disk('local')->exists($path)) {
-            // Periksa di disk 'local' (storage/app)
+
             abort(404, "File PDF tidak ditemukan di lokasi: " . $path);
         }
 
@@ -44,23 +43,53 @@ class EbookController extends Controller
                 fclose($stream);
             }
         }, 200, [
-            // Content-Disposition 'inline' memaksa browser untuk menampilkan, bukan mengunduh.
+
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="' . $ebook->title . '.pdf"',
-            // Lapisan keamanan tambahan
             'X-Content-Type-Options' => 'nosniff',
         ]);
     }
 
+    // create new book
+    public function create()
+    {
+        return view('ebooks.create');
+    }
+
+    public function store(Request $req)
+    {
+        $validated = $req->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'nullable|numeric|min:0',
+            'pdf_file' => 'required|file|mimes:pdf|max:10240', // Max 10MB
+        ], [
+            'pdf_file.required' => 'File PDF wajib diunggah.',
+            'pdf_file.mimes' => 'File harus berformat PDF.',
+            'pdf_file.max' => 'Ukuran file PDF maksimal adalah 10 MB.',
+        ]);
+
+        $file = $req->file('pdf_file');
+
+        $filePath = Storage::disk('local')->putFile('ebooks', $file);
+        $fileName = basename($filePath);
+
+        auth()->user()->ebooks()->create([
+            'title' => $validated['title'],
+            'author' => $validated['author'] ?? 'Anonim',
+            'description' => $validated['description'] ?? null,
+            'price' => $validated['price'] ?? 0.00,
+            'filepath' => $fileName, // Simpan nama file unik
+        ]);
+        return redirect()->route('ebooks.index')->with('status', 'Ebook baru berhasil ditambahkan dan disimpan secara aman!');
+    }
+
     public function destroy(Ebook $ebook)
     {
-        // Opsional: Cek apakah user yang login punya hak untuk menghapus Ebook ini (Authorization)
-        // if (auth()->id() !== $ebook->user_id) {
-        //     abort(403, 'Anda tidak memiliki hak untuk menghapus ebook ini.');
-        // }
 
         try {
-            // Hapus file fisik dari storage
+            // Hapus file dari storage
             $path = 'ebooks/' . $ebook->filepath;
             if (Storage::disk('local')->exists($path)) {
                 Storage::disk('local')->delete($path);
@@ -69,9 +98,8 @@ class EbookController extends Controller
             // Hapus record dari database
             $ebook->delete();
 
-            // Redirect kembali ke dashboard dengan pesan sukses
+            // Redirect kembali ke dashboard
             return redirect()->route('ebooks.index')->with('status', 'Ebook berhasil dihapus!');
-
         } catch (\Exception $e) {
             return redirect()->route('ebooks.index')->with('error', 'Gagal menghapus Ebook: ' . $e->getMessage());
         }
