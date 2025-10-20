@@ -32,21 +32,21 @@ class EbookSeeder extends Seeder
                 'description' => 'Panduan lengkap menjadi Senior Software Engineer Laravel.',
                 'price' => 49.99,
                 // PATH PENTING: Ganti dengan nama file PDF dummy Anda
-                'filepath' => 'Soal Assesment Siswa Kelas X.pdf',
+                'filepath' => 'pdf1.pdf',
             ],
             [
                 'title' => 'Deep Dive into Tailwind CSS',
                 'author' => 'Tailwind Expert',
                 'description' => 'Mempelajari Utility-First CSS secara mendalam.',
                 'price' => 29.50,
-                'filepath' => 'Soal Assesment Siswa Kelas XI.pdf',
+                'filepath' => 'pdf2.pdf',
             ],
             [
                 'title' => 'Secure PDF Viewer with JS',
                 'author' => 'Security Consultant',
                 'description' => 'Teknik memblokir download dan copy pada konten web.',
                 'price' => 99.00,
-                'filepath' => 'Soal Assesment Siswa Kelas XII.pdf',
+                'filepath' => 'pdf3.pdf',
             ]
         ];
 

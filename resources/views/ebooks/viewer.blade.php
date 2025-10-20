@@ -3,38 +3,38 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Viewing: {{ $ebook->title }}</title>
+    <title>Secure Viewer: {{ $ebook->title }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script>
+        // Mencegah klik kanan di halaman utama
         document.addEventListener('contextmenu', event => event.preventDefault());
-        document.addEventListener('selectstart', event => event.preventDefault()); // Mencegah pemilihan teks
-    </script>
+        // Mencegah seleksi teks (agar tidak bisa di-copy)
+        document.addEventListener('selectstart', event => event.preventDefault());
 
-    <script>
-        document.addEventListener("visibilitychange", function() {
-            if (document.visibilityState === 'hidden') {
-                // Saat user pindah tab atau minimize
-                alert("!! PERINGATAN !! Anda tidak diizinkan meninggalkan tab ini saat membaca Ebook.");
-                // Opsi: Anda bisa menambahkan logic untuk logout paksa atau pause
-                // window.focus(); // Ini mungkin tidak didukung di semua browser/versi
-            }
-        });
-
-        // Coba blokir beberapa shortcut keyboard yang umum (mis: Ctrl+P, Ctrl+S)
+        // Coba blokir beberapa shortcut keyboard yang umum (Ctrl+P/S/U)
         document.onkeydown = function(e) {
             if (e.ctrlKey && (e.key === 'p' || e.key === 's' || e.key === 'u')) {
-                alert("Aksi ini diblokir.");
+                alert("Aksi pencetakan/penyimpanan diblokir.");
                 e.preventDefault();
             }
             // Blokir F12 (Developer Tools)
-            if (e.keyCode == 123) {
+            if (e.keyCode === 123) {
                 alert("Developer Tools diblokir.");
                 return false;
             }
         };
     </script>
 
+    <script>
+        document.addEventListener("visibilitychange", function() {
+            if (document.visibilityState === 'hidden') {
+                // Saat user pindah tab atau minimize window
+                alert("!! PERINGATAN !! Anda tidak diizinkan meninggalkan tab ini saat membaca Ebook.");
+                // Jika user mengabaikan, Anda bisa tambahkan log atau tindakan keras lain di sini.
+            }
+        });
+    </script>
 </head>
 <body class="bg-gray-100">
 
@@ -48,7 +48,7 @@
         <iframe
             src="{{ $pdfUrl }}"
             class="w-full h-full border-none"
-            style="min-height: calc(100vh - 64px); /* Sesuaikan dengan tinggi header */"
+            style="min-height: calc(100vh - 64px);"
             title="Ebook Viewer - {{ $ebook->title }}"
         >
             <p>Browser Anda tidak mendukung iframe.</p>
